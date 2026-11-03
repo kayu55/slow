@@ -53,7 +53,7 @@ echo "nameserver 1.1.1.1" >> /etc/resolv.conf
 mkdir -p /etc/slowdns
 chmod 777 /etc/slowdns
 
-REPO="https://raw.githubusercontent.com/hokagelegend9999/alpha.v2/refs/heads/main/slowdns"
+REPO="https://raw.githubusercontent.com/aku55/slow/refs/heads/main/slowdns"
 wget -q -O /etc/slowdns/server.key "${REPO}/server.key"
 wget -q -O /etc/slowdns/server.pub "${REPO}/server.pub"
 wget -q -O /etc/slowdns/sldns-server "${REPO}/sldns-server"
