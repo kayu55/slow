@@ -4,7 +4,7 @@ mkdir -p /root/slowdns
 ````
 
 ````
-wget -O install "raw.githubusercontent.com/kayu55/slow/main/install.sh" &&  chmod +x install
+wget -O install.sh "raw.githubusercontent.com/kayu55/slow/main/install.sh" &&  chmod +x install.sh
 ````
 
 ````
