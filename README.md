@@ -21,8 +21,6 @@ sudo bash /root/install.sh install
 ````
 journalctl -u slowdns -f
 ````
-
-````
 ### jos
 ````
 rm -f /etc/netplan/60-static.yaml; IFACE=$(ip route | grep default | awk '{print $5}' | head -n1); IP=$(ip -4 addr show $IFACE | grep -oP 'inet \K[0-9./]+' | head -n1); GW=$(ip route | grep default | awk '{print $3}' | head -n1); MAC=$(cat /sys/class/net/$IFACE/address); echo "IFACE: $IFACE | IP: $IP | GW: $GW | MAC: $MAC"; cat > /etc/netplan/60-static.yaml <<EOF
