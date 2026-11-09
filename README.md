@@ -22,6 +22,29 @@ sudo bash /root/install.sh install
 journalctl -u slowdns -f
 ````
 
+### jos
+````
+rm -f /etc/netplan/60-static.yaml; IFACE=$(ip route | grep default | awk '{print $5}' | head -n1); IP=$(ip -4 addr show $IFACE | grep -oP 'inet \K[0-9./]+' | head -n1); GW=$(ip route | grep default | awk '{print $3}' | head -n1); MAC=$(cat /sys/class/net/$IFACE/address); echo "IFACE: $IFACE | IP: $IP | GW: $GW | MAC: $MAC"; cat > /etc/netplan/60-static.yaml <<EOF
+network:
+  version: 2
+  ethernets:
+    $IFACE:
+      dhcp4: false
+      dhcp6: false
+      match:
+        macaddress: $MAC
+      set-name: $IFACE
+      addresses:
+        - $IP
+      routes:
+        - to: default
+          via: $GW
+      nameservers:
+        addresses: [8.8.8.8, 1.1.1.1]
+EOF
+chmod 600 /etc/netplan/60-static.yaml; cat /etc/netplan/60-static.yaml; netplan apply; echo "=== HASIL ==="; curl -4 -s ifconfig.me; echo; cat /root/ip
+````
+
 ````
 cat /root/server.pub; echo "---ENV---"; cat /root/slowdns.env.
 ````
