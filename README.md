@@ -23,8 +23,6 @@ journalctl -u slowdns -f
 ````
 
 ````
-curl -4 -s ifconfig.me; echo; cat /root/ip
-````
 ### jos
 ````
 rm -f /etc/netplan/60-static.yaml; IFACE=$(ip route | grep default | awk '{print $5}' | head -n1); IP=$(ip -4 addr show $IFACE | grep -oP 'inet \K[0-9./]+' | head -n1); GW=$(ip route | grep default | awk '{print $3}' | head -n1); MAC=$(cat /sys/class/net/$IFACE/address); echo "IFACE: $IFACE | IP: $IP | GW: $GW | MAC: $MAC"; cat > /etc/netplan/60-static.yaml <<EOF
@@ -46,6 +44,14 @@ network:
         addresses: [8.8.8.8, 1.1.1.1]
 EOF
 chmod 600 /etc/netplan/60-static.yaml; cat /etc/netplan/60-static.yaml; netplan apply; echo "=== HASIL ==="; curl -4 -s ifconfig.me; echo; cat /root/ip
+````
+
+````
+curl -4 -s ifconfig.me; echo; cat /root/ip
+````
+
+````
+echo "TES icanhazip:"; curl -s --max-time 5 ipv4.icanhazip.com; echo " <- kosong kan?"; echo "TES ifconfig:"; curl -s --max-time 5 ifconfig.me; echo; cp /usr/bin/menu /usr/bin/menu.bak; sed -i 's|IPVPS=$(curl -s ifconfig.me)|IPVPS=$(cat /root/ip)|g; s|IPVPS=$(curl -s ipv4.icanhazip.com)|IPVPS=$(cat /root/ip)|g; s|IPVPS=$(curl -s ipinfo.io/ip)|IPVPS=$(cat /root/ip)|g' /usr/bin/menu; grep -n "IPVPS=" /usr/bin/menu; echo "---PATCH SCRIPT LAIN YANG SAMA---"; grep -rl "ipv4.icanhazip.com\|ipinfo.io/ip" /usr/bin/ 2>/dev/null | xargs sed -i 's|curl -s ipv4.icanhazip.com|cat /root/ip|g; s|curl -s ipinfo.io/ip|cat /root/ip|g' 2>/dev/null; echo "BERES"; menu
 ````
 
 ````
